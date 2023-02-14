@@ -2,8 +2,8 @@ package Task3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /*
 Дан массив:
@@ -17,25 +17,12 @@ import java.util.List;
 public class Task3 {
     public String cleaningSorting(String[] strings) {
         List<String> list = new ArrayList<>();
-        for (String string : strings) {
-            String[] str = string.split(" ");
-            list.addAll(Arrays.asList(cleaner(str)));
-        }
-        Collections.sort(list);
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String s : list) {
-            stringBuilder.append(s + ", ");
-        }
-
-        return stringBuilder.toString().substring(0, stringBuilder.length() - 2);
-    }
-
-    private String[] cleaner(String[] str) {
-        for (int i = 0; i < str.length; i++) {
-            str[i] = str[i].replaceAll("/D", "");
-            str[i] = str[i].replaceAll(",", "");
-        }
-        return str;
+        return Arrays.stream(strings)
+                .flatMap(str -> Arrays.stream(str.split(", ")))
+                .map(Integer::parseInt)
+                .sorted()
+                .map(String::valueOf)
+                .collect(Collectors.joining(", "));
     }
 
 }

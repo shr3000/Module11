@@ -1,6 +1,7 @@
 package Task2;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /*
 Задание 2
@@ -9,11 +10,9 @@ import java.util.*;
  */
 public class Task2 {
     public List<String> reversToUpper(List<String> list) {
-        list.sort(Collections.reverseOrder());
-        List<String> temt = new ArrayList<>();
-        for (String s: list) {
-            temt.add(s.toUpperCase());
-        }
-        return temt;
+        return list.stream()
+                .map(String::toUpperCase)
+                .sorted(Collections.reverseOrder())
+                .collect(Collectors.toList());
     }
 }
